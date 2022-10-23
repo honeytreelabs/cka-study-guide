@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-NODE=$1
-NODE_HOST_IP=20+$NODE
+extract_join_command() {
+  grep -A 2 "kubeadm join" < /vagrant/kubeadm-init.out | sed -e 's/^[ \t]*//' | tr '\n' ' ' | sed -e 's/ \\ / /g'
+}
 
-$(cat /vagrant/kubeadm-init.out | grep -A 2 "kubeadm join" | sed -e 's/^[ \t]*//' | tr '\n' ' ' | sed -e 's/ \\ / /g')
+eval "$(extract_join_command)"
 
 cp /vagrant/admin.conf /etc/kubernetes/admin.conf
 chmod ugo+r /etc/kubernetes/admin.conf

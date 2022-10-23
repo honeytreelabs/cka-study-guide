@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+NODE_IP="${1}"
+echo "KUBELET_EXTRA_ARGS=--node-ip=${NODE_IP}" >> /etc/default/kubelet
+
 apt-get update && apt-get install apt-transport-https ca-certificates curl software-properties-common
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 echo "deb  http://apt.kubernetes.io/  kubernetes-xenial  main" > /etc/apt/sources.list.d/kubernetes.list
